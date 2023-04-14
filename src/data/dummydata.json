@@ -1,0 +1,47 @@
+{
+  "items": [
+    {
+      "id": "uuid1",
+      "categories": ["videogames"],
+      "name": "Diablo 4",
+      "picture": "uuid1.png"
+    },
+    {
+      "id": "uuid2",
+      "categories": ["BDs"],
+      "name": "Elfe #10",
+      "picture": "uuid2.png"
+    },
+    {
+      "id": "uuid3",
+      "categories": ["videogames"],
+      "name": "Diablo 4",
+      "picture": "uuid1.png"
+    },
+    {
+      "id": "uuid4",
+      "categories": ["BDs"],
+      "name": "Elfe #10",
+      "picture": "uuid2.png"
+    },
+    {
+      "id": "uuid5",
+      "categories": ["videogames"],
+      "name": "Diablo 4",
+      "picture": "uuid1.png"
+    },
+    {
+      "id": "uuid6",
+      "categories": ["BDs"],
+      "name": "Elfe #10",
+      "picture": "uuid2.png"
+    },
+
+    {
+      "id": "uuid7",
+      "categories": ["videogames", "Rpg"],
+      "name": "Baldur's Gate 3",
+      "picture": "https://m.media-amazon.com/images/M/MV5BMDFlY2MwZGQtZTVjYS00OTM2LWJjYWUtNGY1NjBhZGM0ZTljXkEyXkFqcGdeQXVyMTI0MzA4NTgw._V1_FMjpg_UX1000_.jpg"
+    }
+  ]
+}
