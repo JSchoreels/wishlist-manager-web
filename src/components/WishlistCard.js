@@ -1,9 +1,13 @@
 import React from "react";
 import "./WishlistCard.scss";
 
-export default function WishlistCard({data, opacity}) {
+export default function WishlistCard({data, extra}) {
+    const style = {
+        opacity: extra ? 0.5 : 1,
+        backgroundColor: data.owned ? "lightgreen" : null
+    };
     return (
-        <div className={"card"} style={{opacity: opacity}}>
+        <div className={"card"} style={{...style}}>
             <div className={"name"}>{data.name}</div>
             <div className={"category"}>{data.category}</div>
             <div className={"preview"}>

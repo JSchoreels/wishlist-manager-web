@@ -10,6 +10,7 @@ function WishlistManager(props) {
 
     const [selectedCategories, setSelectedCategories] = useState(allCategories);
     const [combinationMode, setCombinationMode] = useState("OR");
+    const [onlyOwned, setOnlyOwned] = useState(false);
 
     const toggleCategory = event => {
         if (event.target.checked) {
@@ -28,14 +29,26 @@ function WishlistManager(props) {
         return setCombinationMode(event.target.name)
     }
 
-    const itemsMatchingAllCategories = data.items.filter(item => selectedCategories.every(cat => item.categories.includes(cat)));
-    const itemsMatchingSomeCategories = data.items.filter(item => selectedCategories.some(cat => item.categories.includes(cat)));
-    const baseItemsToShow = ["AND", "AND_FIRST"].includes(combinationMode) ?
-        itemsMatchingAllCategories :
-        itemsMatchingSomeCategories;
-    const extraItemsToShow = ["AND_FIRST"].includes(combinationMode) ?
-        itemsMatchingSomeCategories.filter(item => !itemsMatchingAllCategories.includes(item)) :
-        [];
+    const filterItemsOnCategories = (items) => {
+        const itemsMatchingAllCategories = items.filter(item => selectedCategories.every(cat => item.categories.includes(cat)));
+        const itemsMatchingSomeCategories = items.filter(item => selectedCategories.some(cat => item.categories.includes(cat)));
+        const baseItems = ["AND", "AND_FIRST"].includes(combinationMode) ?
+            itemsMatchingAllCategories :
+            itemsMatchingSomeCategories;
+        const extraItems = ["AND_FIRST"].includes(combinationMode)
+          ? itemsMatchingSomeCategories
+              .filter(item => !itemsMatchingAllCategories.includes(item))
+              .map(item => ({ ...item, extra: true }))
+          : [];
+        return {baseItems, extraItems};
+    }
+
+
+    let itemsToShow = data.items;
+    if (onlyOwned) {
+        itemsToShow = itemsToShow.filter(item => item.owned);
+    }
+    itemsToShow = filterItemsOnCategories(itemsToShow);
 
     function resetSelections() {
         setSelectedCategories(allCategories);
@@ -48,7 +61,7 @@ function WishlistManager(props) {
                 <h1>Wishlist Manager</h1>
             </header>
             <h2>Categories</h2>
-            <form style={{border: "1px solid black"}}>
+            <form>
                 <fieldset style={{display: "flex", justifyContent: "left", gap: "25px", order: '1'}}>
                     <legend>Choose category you want to show</legend>
                     {
@@ -73,12 +86,20 @@ function WishlistManager(props) {
                         ))
                     }
                 </fieldset>
+                <fieldset style={{display: "flex", justifyContent: "left", gap: "25px", order: '2'}}>
+                    <legend>Additional Filters</legend>
+                    <div>
+                        <input type="checkbox" id="onlyOwned" name="onlyOwned" checked={onlyOwned}
+                               onChange={event => setOnlyOwned(onlyOwned => !onlyOwned)}/>
+                        <label htmlFor="onlyOwned">Only Owned Items.</label>
+                    </div>
+                </fieldset>
                 <button style={{order: '3'}} onClick={() => resetSelections()}>Reset</button>
             </form>
             <h2>Items</h2>
             <div className={"itemsgrid"}>
-                {baseItemsToShow.map(item => <WishlistCard data={item}/>)}
-                {extraItemsToShow.map(item => <WishlistCard data={item} opacity={0.5}/>)}
+                {itemsToShow['baseItems'].map(item => <WishlistCard data={item}/>)}
+                {itemsToShow['extraItems'].map(item => <WishlistCard data={item} extra/>)}
             </div>
         </div>
 

@@ -2,11 +2,12 @@
 
   display: flex;
   flex-direction: column;
-
+  align-items: center;
   flex: 200px;
 
 }
 
 .preview img{
-  max-width: 200px;
+  width: 100%;
+  height: 100%;
 }
