@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import data from "../data/dummydata.json"
 import WishlistCard from "./WishlistCard";
 import "./WishlistManager.scss";
-import {arraysEqual} from "../utils";
+import {getItemsToShow} from "./DataFilter";
+
+
 
 function WishlistManager(props) {
     const allCategories = [...new Set(data.items.flatMap(item => item.categories))];
@@ -28,31 +30,12 @@ function WishlistManager(props) {
         }
         return setCombinationMode(event.target.name)
     }
-
-    const filterItemsOnCategories = (items) => {
-        const itemsMatchingAllCategories = items.filter(item => selectedCategories.every(cat => item.categories.includes(cat)));
-        const itemsMatchingSomeCategories = items.filter(item => selectedCategories.some(cat => item.categories.includes(cat)));
-        const baseItems = ["AND", "AND_FIRST"].includes(combinationMode) ?
-            itemsMatchingAllCategories :
-            itemsMatchingSomeCategories;
-        const extraItems = ["AND_FIRST"].includes(combinationMode)
-          ? itemsMatchingSomeCategories
-              .filter(item => !itemsMatchingAllCategories.includes(item))
-              .map(item => ({ ...item, extra: true }))
-          : [];
-        return {baseItems, extraItems};
-    }
-
-
-    let itemsToShow = data.items;
-    if (onlyOwned) {
-        itemsToShow = itemsToShow.filter(item => item.owned);
-    }
-    itemsToShow = filterItemsOnCategories(itemsToShow);
+    const itemsToShow = getItemsToShow(data, selectedCategories, combinationMode, onlyOwned);
 
     function resetSelections() {
         setSelectedCategories(allCategories);
         setCombinationMode("OR");
+        setOnlyOwned(false)
     }
 
     return (
@@ -66,7 +49,7 @@ function WishlistManager(props) {
                     <legend>Choose category you want to show</legend>
                     {
                         allCategories.map(cat => (
-                            <div>
+                            <div key={cat}>
                                 <input type="checkbox" id={cat} name={cat} checked={selectedCategories.includes(cat)}
                                        onChange={toggleCategory}/>
                                 <label htmlFor={cat}>{cat}</label>
@@ -78,7 +61,7 @@ function WishlistManager(props) {
                     <legend>Choose the combination mode you prefer</legend>
                     {
                         combinationModes.map(mode => (
-                            <div>
+                            <div key={mode}>
                                 <input type="radio" id={mode} name={mode} checked={mode === combinationMode}
                                        onChange={toggleCombinationMode}/>
                                 <label htmlFor={mode}>{mode}</label>
@@ -98,8 +81,8 @@ function WishlistManager(props) {
             </form>
             <h2>Items</h2>
             <div className={"itemsgrid"}>
-                {itemsToShow['baseItems'].map(item => <WishlistCard data={item}/>)}
-                {itemsToShow['extraItems'].map(item => <WishlistCard data={item} extra/>)}
+                {itemsToShow['baseItems'].map(item => <WishlistCard key={item.id} data={item}/>)}
+                {itemsToShow['extraItems'].map(item => <WishlistCard key={item.id} data={item} extra/>)}
             </div>
         </div>
 
