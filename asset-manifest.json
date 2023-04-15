@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/wishlist-manager-web/static/css/main.5680e1bb.css",
-    "main.js": "/wishlist-manager-web/static/js/main.72e8d4c9.js",
+    "main.css": "/wishlist-manager-web/static/css/main.2d1d2a33.css",
+    "main.js": "/wishlist-manager-web/static/js/main.ca81254f.js",
     "static/js/787.f4169009.chunk.js": "/wishlist-manager-web/static/js/787.f4169009.chunk.js",
     "static/media/uuid2.png": "/wishlist-manager-web/static/media/uuid2.6f4ba785115b01b942ba.png",
     "static/media/uuid1.png": "/wishlist-manager-web/static/media/uuid1.7d958c5d063f0efc3e77.png",
     "static/media/logo.svg": "/wishlist-manager-web/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/wishlist-manager-web/index.html",
-    "main.5680e1bb.css.map": "/wishlist-manager-web/static/css/main.5680e1bb.css.map",
-    "main.72e8d4c9.js.map": "/wishlist-manager-web/static/js/main.72e8d4c9.js.map",
+    "main.2d1d2a33.css.map": "/wishlist-manager-web/static/css/main.2d1d2a33.css.map",
+    "main.ca81254f.js.map": "/wishlist-manager-web/static/js/main.ca81254f.js.map",
     "787.f4169009.chunk.js.map": "/wishlist-manager-web/static/js/787.f4169009.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5680e1bb.css",
-    "static/js/main.72e8d4c9.js"
+    "static/css/main.2d1d2a33.css",
+    "static/js/main.ca81254f.js"
   ]
 }
