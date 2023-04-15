@@ -45,7 +45,7 @@ function WishlistManager(props) {
             </header>
             <h2>Categories</h2>
             <form>
-                <fieldset style={{display: "flex", justifyContent: "left", gap: "25px", order: '1'}}>
+                <fieldset style={{display: "flex", justifyContent: "left", gap: "25px"}}>
                     <legend>Choose category you want to show</legend>
                     {
                         allCategories.map(cat => (
@@ -57,7 +57,7 @@ function WishlistManager(props) {
                         ))
                     }
                 </fieldset>
-                <fieldset style={{display: "flex", justifyContent: "left", gap: "25px", order: '2'}}>
+                <fieldset style={{display: "flex", justifyContent: "left", gap: "25px"}}>
                     <legend>Choose the combination mode you prefer</legend>
                     {
                         combinationModes.map(mode => (
@@ -77,7 +77,7 @@ function WishlistManager(props) {
                         <label htmlFor="onlyOwned">Only Owned Items.</label>
                     </div>
                 </fieldset>
-                <button style={{order: '3'}} onClick={() => resetSelections()}>Reset</button>
+                <button id={"resetSelection"} onClick={() => resetSelections()}>Reset</button>
             </form>
             <h2>Items</h2>
             <div className={"itemsgrid"}>

@@ -4,3 +4,23 @@
   grid-gap: 25px;
   justify-content: space-around;
 }
+form {
+  margin:25px;
+  text-align: left;
+}
+
+#resetSelection {
+  position: relative;
+  left: 0em;
+  //transform: translateX(-50%);
+}
+
+fieldset {
+  margin: 10px 0px;
+  padding: 0;
+  border: 0;
+}
+
+fieldset legend {
+    font-weight: bold;
+}
