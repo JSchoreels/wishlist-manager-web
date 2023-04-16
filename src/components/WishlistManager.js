@@ -4,15 +4,70 @@ import WishlistCard from "./WishlistCard";
 import "./WishlistManager.scss";
 import {getItemsToShow} from "./DataFilter";
 
+export function parseDate(dateString) {
+    if (dateString == null) {
+        return null;
+    } else {
+        const inputMonth = dateString.split("-")[1];
+        const inputDay = dateString.split("-")[2];
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            return null;
+        }
+        if (!inputMonth) {
+            date.setFullYear(date.getFullYear() + 1);
+            date.setDate(date.getDate() - 1);
+        } else if (!inputDay) {
+            date.setMonth(date.getMonth() + 1);
+            date.setDate(date.getDate() - 1);
+        }
+        return date;
+    }
+}
 
+export const sortingByCriteria = (criteria, criteriaType, reversed) => {
+    const sortingBy = (a, b) => {
+        let aValue = a[criteria];
+        let bValue = b[criteria];
+        if (criteriaType === "Date") {
+            aValue = parseDate(aValue);
+            bValue = parseDate(bValue);
+        }
+        if (aValue == null) {
+            return 1;
+        } else if (bValue == null) {
+            return -1;
+        } else if (aValue < bValue) {
+            return -1;
+        } else if (aValue > bValue) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+
+    return (a,b) => (reversed ? -1 : 1) * sortingBy(a,b);
+}
 
 function WishlistManager(props) {
     const allCategories = [...new Set(data.items.flatMap(item => item.categories))];
     const combinationModes = ["OR", "AND", "AND_FIRST"];
+    const defaultCombinationMode = "OR";
+    const defaultOnlyOwned = false;
+    const sortingCriterias = {
+        "id": {"Label": "Custom"},
+        "releaseDate": {"Label": "Release Date", type: "Date"},
+        "addedDate": {"Label": "Added Date", type: "Date"},
+        "name": {"Label": "Name"}
+    };
+    const defaultSortingCriteria = 'releaseDate';
+    const defaultReversedOrder = true;
 
     const [selectedCategories, setSelectedCategories] = useState(allCategories);
-    const [combinationMode, setCombinationMode] = useState("OR");
-    const [onlyOwned, setOnlyOwned] = useState(false);
+    const [combinationMode, setCombinationMode] = useState(defaultCombinationMode);
+    const [onlyOwned, setOnlyOwned] = useState(defaultOnlyOwned);
+    const [sortingCriteria, setSortingCriteria] = useState(defaultSortingCriteria);
+    const [reversedOrder, setReversedOrder] = useState(defaultReversedOrder);
 
     const toggleCategory = event => {
         if (event.target.checked) {
@@ -30,13 +85,24 @@ function WishlistManager(props) {
         }
         return setCombinationMode(event.target.name)
     }
-    const itemsToShow = getItemsToShow(data, selectedCategories, combinationMode, onlyOwned);
+
+    function toggleSortingCriteria(event) {
+        setSortingCriteria(event.target.value);
+    }
 
     function resetSelections() {
         setSelectedCategories(allCategories);
-        setCombinationMode("OR");
-        setOnlyOwned(false)
+        setCombinationMode(defaultCombinationMode);
+        setOnlyOwned(defaultOnlyOwned);
+        setSortingCriteria(defaultSortingCriteria);
+        setReversedOrder(defaultReversedOrder)
     }
+
+    const itemsToShow = getItemsToShow(data, selectedCategories, combinationMode, onlyOwned);
+
+
+    itemsToShow.baseItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].Type, reversedOrder));
+    itemsToShow.extraItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].Type, reversedOrder));
 
     return (
         <div>
@@ -77,6 +143,23 @@ function WishlistManager(props) {
                         <label htmlFor="onlyOwned">Only Owned Items.</label>
                     </div>
                 </fieldset>
+                <fieldset style={{display: "flex", justifyContent: "left", gap: "10px", order: '2'}}>
+                    <legend>Sorting Order</legend>
+                    <select id="sortSelection" name="sortSelection" onChange={toggleSortingCriteria}
+                            defaultValue={defaultSortingCriteria}>
+                        {
+                            Object.keys(sortingCriterias).map(criteria => (
+                                <option key={criteria} value={criteria}>{sortingCriterias[criteria].Label}</option>
+                            ))
+                        }
+                    </select>
+                    <div>
+                        <input type="checkbox" id="reversedOrder" name="reversedOrder" checked={reversedOrder}
+                               onChange={event => setReversedOrder(reversedOrder => !reversedOrder)}/>
+                        <label htmlFor="onlyOwned">reversed</label>
+                    </div>
+                </fieldset>
+
                 <button id={"resetSelection"} onClick={() => resetSelections()}>Reset</button>
             </form>
             <h2>Items</h2>
