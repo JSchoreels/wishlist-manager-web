@@ -101,8 +101,8 @@ function WishlistManager(props) {
     const itemsToShow = getItemsToShow(data, selectedCategories, combinationMode, onlyOwned);
 
 
-    itemsToShow.baseItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].Type, reversedOrder));
-    itemsToShow.extraItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].Type, reversedOrder));
+    itemsToShow.baseItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
+    itemsToShow.extraItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
 
     return (
         <div>
