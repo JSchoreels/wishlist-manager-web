@@ -109,10 +109,9 @@ function WishlistManager(props) {
             <header>
                 <h1>Wishlist Manager</h1>
             </header>
-            <h2>Categories</h2>
             <form>
                 <fieldset style={{display: "flex", justifyContent: "left", gap: "25px"}}>
-                    <legend>Choose category you want to show</legend>
+                    <legend>Choose a category you want to show</legend>
                     {
                         allCategories.map(cat => (
                             <div key={cat}>
@@ -124,7 +123,7 @@ function WishlistManager(props) {
                     }
                 </fieldset>
                 <fieldset style={{display: "flex", justifyContent: "left", gap: "25px"}}>
-                    <legend>Choose the combination mode you prefer</legend>
+                    <legend>Choose the combination mode (AND_FIRST will do first an "AND" and add "OR" after)</legend>
                     {
                         combinationModes.map(mode => (
                             <div key={mode}>
