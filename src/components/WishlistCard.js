@@ -10,7 +10,7 @@ export default function WishlistCard({data, extra}) {
             <div className={"name"} style={{width: "100%", backgroundColor: data.owned ? "lightgreen" : null}}>{data.name}</div>
             <div className={"category"}>{data.category}</div>
             <div className={"preview"}>
-                <img src={data.picture.includes("http") ? data.picture : require(`../data/${data.picture}`)}
+                <img src={data.picture.startsWith("http") || data.picture.startsWith("data:")? data.picture : require(`../data/${data.picture}`)}
                      alt={`Preview image of ${data.name}`}/>
             </div>
             <div className={"footer"} style={{display: "flex", justifyContent: "space-between", width: "100%"}}>

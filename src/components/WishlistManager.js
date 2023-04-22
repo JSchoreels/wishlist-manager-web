@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import data from "../data/dummydata.json"
+import dummydata from "../data/dummydata.json"
 import WishlistCard from "./WishlistCard";
 import "./WishlistManager.scss";
 import {getItemsToShow} from "./DataFilter";
+import WishlistCardCreator from "./WishlistCardCreator";
+import { v4 as uuidv4 } from 'uuid';
 
 export function parseDate(dateString) {
     if (dateString == null) {
@@ -46,11 +48,10 @@ export const sortingByCriteria = (criteria, criteriaType, reversed) => {
         }
     };
 
-    return (a,b) => (reversed ? -1 : 1) * sortingBy(a,b);
+    return (a, b) => (reversed ? -1 : 1) * sortingBy(a, b);
 }
 
 function WishlistManager(props) {
-    const allCategories = [...new Set(data.items.flatMap(item => item.categories))];
     const combinationModes = ["OR", "AND", "AND_FIRST"];
     const defaultCombinationMode = "OR";
     const defaultOnlyOwned = false;
@@ -63,6 +64,8 @@ function WishlistManager(props) {
     const defaultSortingCriteria = 'releaseDate';
     const defaultReversedOrder = true;
 
+    const [data, setData] = useState(dummydata);
+    const allCategories = [...new Set(data.items.flatMap(item => item.categories))];
     const [selectedCategories, setSelectedCategories] = useState(allCategories);
     const [combinationMode, setCombinationMode] = useState(defaultCombinationMode);
     const [onlyOwned, setOnlyOwned] = useState(defaultOnlyOwned);
@@ -103,6 +106,19 @@ function WishlistManager(props) {
 
     itemsToShow.baseItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
     itemsToShow.extraItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
+
+    const deleteItemCallback = (id) => {
+
+    }
+
+    const saveItemCallback = (key, cardData) => {
+        setData(
+            data => ({
+                ...data,
+                items: [...data.items, cardData]
+            })
+        )
+    }
 
     return (
         <div>
@@ -163,11 +179,15 @@ function WishlistManager(props) {
             </form>
             <h2>Items</h2>
             <div className={"itemsgrid"}>
+                <WishlistCardCreator key={uuidv4()} allCategories={allCategories}
+                                     deleteItemCallback={deleteItemCallback}
+                                     saveItemCallback={saveItemCallback}/>
                 {itemsToShow['baseItems'].map(item => <WishlistCard key={item.id} data={item}/>)}
                 {itemsToShow['extraItems'].map(item => <WishlistCard key={item.id} data={item} extra/>)}
             </div>
+            <a href="https://www.flaticon.com/free-icons/frame" title="frame icons">Frame icons created by Alfredo
+                Hernandez - Flaticon</a>
         </div>
-
     );
 }
 
