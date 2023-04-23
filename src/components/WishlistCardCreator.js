@@ -36,7 +36,7 @@ export default function WishlistCardCreator(props) {
                 <label htmlFor="preview-input">
                     {cardData.picture ?
                         <img src={cardData.picture} alt="Preview" style={{opacity: "75%"}}/> :
-                        <img src={addImage} alt="Upload Image"/>}
+                        <img src={addImage} alt="Upload Card Preview"/>}
                 </label>
                 <input id="preview-input" type="file" onChange={updateCardImage} style={{display: "none"}}/>
             </div>
@@ -45,9 +45,9 @@ export default function WishlistCardCreator(props) {
                 <input type="date" id="date" name="date" onChange={updateReleaseDate}/>
                 <div className={"controls"} style={{display: "flex", gap: "5px"}}>
                     <span role={"img"} aria-label={"Delete"}
-                          onClick={props.deleteItemCallback(props.key)}>❌</span>
+                          onClick={() => props.deleteItemCallback(props.id)}>❌</span>
                     <span role={"img"} aria-label={"Save"}
-                          onClick={() => props.saveItemCallback(props.key, cardData)}>✅</span>
+                          onClick={() => props.saveItemCallback(props.id, cardData)}>✅</span>
                 </div>
             </div>
         </div>

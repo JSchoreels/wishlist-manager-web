@@ -108,7 +108,10 @@ function WishlistManager(props) {
     itemsToShow.extraItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
 
     const deleteItemCallback = (id) => {
-
+        setData( data => ({
+            ...data,
+            items: data.items.filter(item => item.id !== id)
+        }))
     }
 
     const saveItemCallback = (key, cardData) => {
@@ -120,6 +123,7 @@ function WishlistManager(props) {
         )
     }
 
+    const new_id = uuidv4();
     return (
         <div>
             <header>
@@ -179,11 +183,15 @@ function WishlistManager(props) {
             </form>
             <h2>Items</h2>
             <div className={"itemsgrid"}>
-                <WishlistCardCreator key={uuidv4()} allCategories={allCategories}
+                <WishlistCardCreator key={new_id} id={new_id} allCategories={allCategories}
                                      deleteItemCallback={deleteItemCallback}
                                      saveItemCallback={saveItemCallback}/>
-                {itemsToShow['baseItems'].map(item => <WishlistCard key={item.id} data={item}/>)}
-                {itemsToShow['extraItems'].map(item => <WishlistCard key={item.id} data={item} extra/>)}
+                    {itemsToShow['baseItems'].map(item => <WishlistCard key={item.id}
+                                                                    deleteItemCallback={deleteItemCallback}
+                                                                    data={item}/>)}
+                {itemsToShow['extraItems'].map(item => <WishlistCard key={item.id}
+                                                                     deleteItemCallback={deleteItemCallback}
+                                                                     data={item} extra/>)}
             </div>
             <a href="https://www.flaticon.com/free-icons/frame" title="frame icons">Frame icons created by Alfredo
                 Hernandez - Flaticon</a>

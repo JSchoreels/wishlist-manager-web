@@ -1,7 +1,7 @@
 import React from "react";
 import "./WishlistCard.scss";
 
-export default function WishlistCard({data, extra}) {
+export default function WishlistCard({deleteItemCallback, data, extra}) {
     const style = {
         opacity: extra ? 0.5 : 1,
     };
@@ -15,7 +15,9 @@ export default function WishlistCard({data, extra}) {
             </div>
             <div className={"footer"} style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
                 <div className={"release_date"}>{data.releaseDate ? data.releaseDate : 'No Release Date'}</div>
-                <div className={"controls"}>
+                <div className={"controls"} style={{display: "flex", gap: "5px"}}>
+                    <span role={"img"} aria-label={"Delete"}
+                          onClick={() => deleteItemCallback(data.id)}>❌</span>
                     <a href={`https://google.com/search?q=${encodeURIComponent(data.name)}`} target="_blank" rel="noopener noreferrer">
                         <span role={"img"} aria-label={"Related News"}>🄽</span>
                     </a>
