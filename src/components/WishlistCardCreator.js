@@ -24,12 +24,12 @@ PreviewUploader.propTypes = {
     onInvalid: PropTypes.func
 };
 
-function CardSaver(props) {
+function CardSaver() {
     return <>
         <label htmlFor={"save-item"}>
             <span role={"img"} aria-label={"save-item"}>✅</span>
         </label>
-        <button id="save-item" type={"submit"} style={{display: "none"}} onSubmit={props.onSubmit}>Submit</button>
+        <button id="save-item" type={"submit"} style={{display: "none"}}>Submit</button>
     </>
 }
 
@@ -48,7 +48,10 @@ function ReleaseDateSelector(props) {
 
 ReleaseDateSelector.propTypes = {onChange: PropTypes.func};
 export default function WishlistCardCreator(props) {
-    const [cardData, setCardDate] = useState({});
+    const [cardData, setCardDate] = useState({
+        name: '',
+        categories: [],
+    });
     const [invalidPicture, setInvalidPicture] = useState(false);
 
 
@@ -70,7 +73,7 @@ export default function WishlistCardCreator(props) {
     };
     const saveCardData = () => props.saveItemCallback(props.id, cardData);
     return (
-        <form>
+        <form onSubmit={saveCardData}>
             <fieldset>
                 <div className={"card"} key={props.id}>
                     <input type={"text"} className={"name"} style={{width: "100%"}}

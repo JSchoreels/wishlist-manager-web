@@ -66,7 +66,7 @@ function WishlistManager(props) {
 
     const [data, setData] = useState(dummydata);
     const allCategories = [...new Set(data.items.flatMap(item => item.categories))];
-    const [selectedCategories, setSelectedCategories] = useState(allCategories);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [combinationMode, setCombinationMode] = useState(defaultCombinationMode);
     const [onlyOwned, setOnlyOwned] = useState(defaultOnlyOwned);
     const [sortingCriteria, setSortingCriteria] = useState(defaultSortingCriteria);
@@ -81,11 +81,6 @@ function WishlistManager(props) {
     }
 
     const toggleCombinationMode = event => {
-        if (combinationMode === "OR" && selectedCategories.length === allCategories.length) {
-            setSelectedCategories([]);
-        } else if (combinationMode === "AND" && selectedCategories.length === 0) {
-            setSelectedCategories(allCategories);
-        }
         return setCombinationMode(event.target.name)
     }
 
@@ -94,7 +89,7 @@ function WishlistManager(props) {
     }
 
     function resetSelections() {
-        setSelectedCategories(allCategories);
+        setSelectedCategories([]);
         setCombinationMode(defaultCombinationMode);
         setOnlyOwned(defaultOnlyOwned);
         setSortingCriteria(defaultSortingCriteria);
@@ -119,7 +114,7 @@ function WishlistManager(props) {
             data => ({
                 ...data,
                 items: [...data.items, cardData]
-            })
+                })
         )
     }
 

@@ -20,18 +20,35 @@ describe('getItemsToShow', () => {
                 name: 'Item 3',
                 categories: ['cat1', 'cat3'],
                 owned: true
+            },
+            {
+                id: 4,
+                name: 'Item 4',
+                categories: [],
+                owned: false
             }
         ]
     };
 
-    it('should return no items when no categories are selected', () => {
+    it('should return all items when no categories are selected with OR', () => {
         const selectedCategories = [];
         const combinationMode = 'OR';
         const onlyOwned = false;
 
         const result = getItemsToShow(data, selectedCategories, combinationMode, onlyOwned);
 
-        expect(result.baseItems).toEqual([]);
+        expect(result.baseItems).toEqual(data.items);
+        expect(result.extraItems).toEqual([]);
+    });
+
+    it('should return all items when no categories are selected with AND', () => {
+        const selectedCategories = [];
+        const combinationMode = 'AND';
+        const onlyOwned = false;
+
+        const result = getItemsToShow(data, selectedCategories, combinationMode, onlyOwned);
+
+        expect(result.baseItems).toEqual(data.items);
         expect(result.extraItems).toEqual([]);
     });
 
