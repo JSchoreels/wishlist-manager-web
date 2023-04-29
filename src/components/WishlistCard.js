@@ -1,10 +1,11 @@
-import React from "react";
+import React, {memo, useCallback} from "react";
 import "./WishlistCard.scss";
 
-export default function WishlistCard({deleteItemCallback, data, extra}) {
+export default memo(function WishlistCard({deleteItemCallback, data, extra}) {
     const style = {
         opacity: extra ? 0.5 : 1,
     };
+    const deleteCard = useCallback(() => deleteItemCallback(data.id), [deleteItemCallback, data.id]);
     return (
         <div className={"card"} style={{...style}}>
             <div className={"name"} style={{width: "100%", backgroundColor: data.owned ? "lightgreen" : null}}>{data.name}</div>
@@ -17,7 +18,7 @@ export default function WishlistCard({deleteItemCallback, data, extra}) {
                 <div className={"release_date"}>{data.releaseDate ? data.releaseDate : 'No Release Date'}</div>
                 <div className={"controls"} style={{display: "flex", gap: "5px"}}>
                     <span role={"img"} aria-label={"Delete"}
-                          onClick={() => deleteItemCallback(data.id)}>❌</span>
+                          onClick={deleteCard}>❌</span>
                     <a href={`https://google.com/search?q=${encodeURIComponent(data.name)}`} target="_blank" rel="noopener noreferrer">
                         <span role={"img"} aria-label={"Related News"}>🄽</span>
                     </a>
@@ -25,4 +26,4 @@ export default function WishlistCard({deleteItemCallback, data, extra}) {
             </div>
         </div>
     );
-}
+});

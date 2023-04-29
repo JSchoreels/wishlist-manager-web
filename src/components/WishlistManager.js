@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import dummydata from "../data/dummydata.json"
 import WishlistCard from "./WishlistCard";
 import "./WishlistManager.scss";
@@ -102,12 +102,12 @@ function WishlistManager(props) {
     itemsToShow.baseItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
     itemsToShow.extraItems.sort(sortingByCriteria(sortingCriteria, sortingCriterias[sortingCriteria].type, reversedOrder));
 
-    const deleteItemCallback = (id) => {
+    const deleteItemCallback = useCallback((id) => {
         setData( data => ({
             ...data,
             items: data.items.filter(item => item.id !== id)
         }))
-    }
+    }, [data]);
 
     const saveItemCallback = (key, cardData) => {
         setData(
