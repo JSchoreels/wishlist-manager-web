@@ -85,6 +85,17 @@
       "picture": "https://cdn.mos.cms.futurecdn.net/F4AR6UGS2eamtcgUiVJVTm-1200-80.jpeg",
       "owned": false,
       "releaseDate": "2023-04-28"
+    },
+    {
+      "id": "uuid9",
+      "categories": [
+        "videogames",
+        "Fighting"
+      ],
+      "name": "Mortal Kombat 1",
+      "picture": "mk1.png",
+      "owned": false,
+      "releaseDate": "2023-09-19"
     }
   ]
 }
