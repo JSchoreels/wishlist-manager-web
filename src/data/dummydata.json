@@ -96,6 +96,17 @@
       "picture": "mk1.png",
       "owned": false,
       "releaseDate": "2023-09-19"
+    },
+    {
+      "id": "uuid9",
+      "categories": [
+        "videogames",
+        "Fighting"
+      ],
+      "name": "Street Fighter 6",
+      "picture": "Street-Fighter-6-PS5-Bijatyka-PL-SF6.webp",
+      "owned": true,
+      "releaseDate": "2023-06-02"
     }
   ]
 }
