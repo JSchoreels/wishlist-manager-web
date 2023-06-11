@@ -31,6 +31,7 @@
       "name": "Diablo 4",
       "picture": "uuid1.png",
       "releaseDate": "2023-06-06",
+      "owned": true,
       "addedDate": "2023-04-12"
     },
     {
@@ -98,7 +99,7 @@
       "releaseDate": "2023-09-19"
     },
     {
-      "id": "uuid9",
+      "id": "uuid10",
       "categories": [
         "videogames",
         "Fighting"
